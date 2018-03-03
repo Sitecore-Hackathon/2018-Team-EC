@@ -28,6 +28,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +52,9 @@
       <HintPath>..\..\..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ExcelDataReader, Version=3.4.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\ExcelDataReader.3.4.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
     <Reference Include="Glass.Mapper, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Glass.Mapper.Sc.Core.4.5.0.4\lib\net45\Glass.Mapper.dll</HintPath>
       <Private>True</Private>
@@ -72,6 +76,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -125,16 +130,23 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app_code\Services\DataImporter\Services\IDataImporterService.cs" />
+    <Content Include="app_code\Services\DataImporter\Services\DataImporterService.cs" />
+    <Content Include="app_code\Services\DataImporter\Factories\DataImporterFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app_code\Services\DataExporter\Factories\" />
+    <Folder Include="app_code\Services\DataExporter\Models\" />
+    <Folder Include="app_code\Services\DataExporter\Services\" />
+    <Folder Include="app_code\Services\DataImporter\Models\" />
     <Folder Include="App_Config\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\XConnectDataTool\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Ser\" />
     <Folder Include="Views\XConnectDataTool\" />
   </ItemGroup>
   <PropertyGroup>
