@@ -11,7 +11,7 @@ namespace SxAStatisticsTool.Repositories.Helpers
 {
     public static class Util
     {
-        const string sitesPath = "/sitecore/content/"; //Make configurable
+        const string sitesPath = "/sitecore/content"; //Make configurable
 
         /// <summary>
         /// Runs sitecore query against an item / database
@@ -53,33 +53,59 @@ namespace SxAStatisticsTool.Repositories.Helpers
         }
 
 
-        public static T CastItem<T>(this Item item) where T : class
+        /// <summary>
+        /// Retrieves a list of the most visited items by recency.
+        /// </summary>
+        /// <param name="maxItems">Maximum # of items to return. Default: 100.</param>
+        /// <param name="days">How many days to go back and search for visits. Default: 60.</param>
+        /// <param name="path">When using a template id: search for withing an specific path.</param>
+        /// <param name="templateId">Limit results to a subset of items based on the template id.</param>
+        /// <returns></returns>
+        public static Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid())
         {
-            return item as T;
-            //return SitecoreService.Cast<T>(item);
-        }
+            var query = string.Empty;
 
-        public static Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 3, int days = 30, string path = null, Guid templateId = new Guid())
-        {
-            var query =
-                string.Format(
-                    "SELECT TOP {0} ItemId, count(*) as cnt FROM Fact_PageViews WHERE Date > DATEADD(DAY, -{1}, GETDATE()) GROUP BY ItemId ORDER BY cnt DESC",
-                    maxItems, days);
-
-            var dataQuery = new ReportDataQuery(query);
-            var provider = (ReportDataProviderBase)Factory.CreateObject("reporting/dataProvider", true);
-            var response = provider.GetData("reporting", dataQuery, CachingPolicy.WithCacheDisabled);
-
-            var items = response.GetDataTable().Rows;
-
-            var results = new Dictionary<Guid, int>();
-
-            for (var i = 0; i < items.Count; i++)
+            if (templateId != Guid.Empty)
             {
-                results.Add(Guid.Parse(System.Convert.ToString(items[i]["ItemId"])), System.Convert.ToInt32(items[i]["cnt"]));
+                var itemIds = GetAllGuidsByTemplateId(new ID(templateId), path);
+
+                if (itemIds != null && itemIds.Any())
+                {
+                    var stringIds = itemIds.Aggregate(string.Empty, (current, id) => current + (current + "'" + id + "',"));
+                    stringIds = stringIds.Substring(0, stringIds.LastIndexOf(",", StringComparison.Ordinal));
+
+                    query =
+
+                        $@"SELECT TOP {maxItems} ItemId, count(*) as cnt FROM Fact_PageViews 
+                           WHERE Date > DATEADD(DAY, -{days}, GETDATE()) 
+                           AND ItemId IN({stringIds}) GROUP BY ItemId ORDER BY cnt DESC";
+                }
+            }
+            else
+            {
+                query =
+                    $@"SELECT TOP {maxItems} ItemId, count(*) as cnt FROM Fact_PageViews 
+                       WHERE Date > DATEADD(DAY, -{days}, GETDATE()) GROUP BY ItemId ORDER BY cnt DESC";
             }
 
-            return results;
+            if (!string.IsNullOrEmpty(query))
+            {
+                var dataQuery = new ReportDataQuery(query);
+                var provider = (ReportDataProviderBase)Factory.CreateObject("reporting/dataProvider", true);
+                var response = provider.GetData("reporting", dataQuery, CachingPolicy.WithCacheDisabled);
+
+                var items = response.GetDataTable().Rows;
+
+                var results = new Dictionary<Guid, int>();
+
+                for (var i = 0; i < items.Count; i++)
+                {
+                    results.Add(Guid.Parse(System.Convert.ToString(items[i]["ItemId"])), System.Convert.ToInt32(items[i]["cnt"]));
+                }
+
+                return results;
+            }
+            return null;
         }
 
 
