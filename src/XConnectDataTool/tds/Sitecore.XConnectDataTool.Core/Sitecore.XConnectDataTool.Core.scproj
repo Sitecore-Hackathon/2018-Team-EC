@@ -34,10 +34,11 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>.\bin\Debug\</OutputPath>
     <RecursiveDeployAction>Ignore</RecursiveDeployAction>
-    <SitecoreDeployFolder>C:\inetpub\wwwroot\sitecorehelix822\Website</SitecoreDeployFolder>
-    <SitecoreWebUrl>http://sitecorehelix822.verndale-local.com/</SitecoreWebUrl>
+    <SitecoreDeployFolder>\\qto-dpc-01455\sc91.local</SitecoreDeployFolder>
+    <SitecoreWebUrl>http://sc91.local</SitecoreWebUrl>
     <SitecoreAccessGuid>4f69e0ea-4b94-4276-9414-7c5bed25bc9d</SitecoreAccessGuid>
     <InstallSitecoreConnector>True</InstallSitecoreConnector>
+    <DisableFileDeployment>False</DisableFileDeployment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DebugSymbols>false</DebugSymbols>
