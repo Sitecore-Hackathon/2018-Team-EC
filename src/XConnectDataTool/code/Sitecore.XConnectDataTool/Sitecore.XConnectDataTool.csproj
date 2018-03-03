@@ -28,6 +28,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -130,16 +131,23 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app_code\Services\DataImporter\Services\IDataImporterService.cs" />
+    <Content Include="app_code\Services\DataImporter\Services\DataImporterService.cs" />
+    <Content Include="app_code\Services\DataImporter\Factories\DataImporterFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="app_code\Services\DataExporter\Factories\" />
+    <Folder Include="app_code\Services\DataExporter\Models\" />
+    <Folder Include="app_code\Services\DataExporter\Services\" />
+    <Folder Include="app_code\Services\DataImporter\Models\" />
     <Folder Include="App_Config\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\XConnectDataTool\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="Repositories\Ser\" />
     <Folder Include="Views\XConnectDataTool\" />
   </ItemGroup>
   <PropertyGroup>
