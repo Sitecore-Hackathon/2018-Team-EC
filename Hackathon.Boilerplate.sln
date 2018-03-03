@@ -1,14 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Feature", "Feature", "{17DD5718-6E13-4F2C-9738-B410396D4552}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{4FDA1DCD-D33E-447E-91C1-F4AE818E2CF0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project", "Project", "{15D97D61-D597-42EC-B7E9-E9EC8130E630}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configuration", "{ADCA10F7-A1D2-407B-8074-60418168C02E}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -29,7 +23,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{D27C83
 		documentation\images\hackathon.png = documentation\images\hackathon.png
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.XConnectDataTool", "src\XConnectDataTool\code\Sitecore.XConnectDataTool\Sitecore.XConnectDataTool.csproj", "{BE11D0DD-DF0F-4ABD-918A-E9C9BD2A8AAB}"
+EndProject
+Project("{CAA73BB0-EF22-4D79-A57E-DF67B3BA9C80}") = "Sitecore.XConnectDataTool.Core", "src\XConnectDataTool\tds\Sitecore.XConnectDataTool.Core\Sitecore.XConnectDataTool.Core.scproj", "{D5AF0A6F-BFC4-4BF0-B20B-A13F7DC448A5}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE11D0DD-DF0F-4ABD-918A-E9C9BD2A8AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE11D0DD-DF0F-4ABD-918A-E9C9BD2A8AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE11D0DD-DF0F-4ABD-918A-E9C9BD2A8AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE11D0DD-DF0F-4ABD-918A-E9C9BD2A8AAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5AF0A6F-BFC4-4BF0-B20B-A13F7DC448A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5AF0A6F-BFC4-4BF0-B20B-A13F7DC448A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5AF0A6F-BFC4-4BF0-B20B-A13F7DC448A5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D5AF0A6F-BFC4-4BF0-B20B-A13F7DC448A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5AF0A6F-BFC4-4BF0-B20B-A13F7DC448A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5AF0A6F-BFC4-4BF0-B20B-A13F7DC448A5}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

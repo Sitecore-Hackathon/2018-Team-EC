@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\..\..\..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\..\..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{d5af0a6f-bfc4-4bf0-b20b-a13f7dc448a5}</ProjectGuid>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <EnableUpdateable>true</EnableUpdateable>
+    <UseMerge>true</UseMerge>
+    <SingleAssemblyName>Sitecore.XConnectDataTool.Core</SingleAssemblyName>
+    <UseWebConfigReplacement>false</UseWebConfigReplacement>
+    <DeleteAppCodeCompiledFiles>true</DeleteAppCodeCompiledFiles>
+    <LegacyFileReplacement>false</LegacyFileReplacement>
+    <SitecoreDatabase>core</SitecoreDatabase>
+    <AssemblyName>Sitecore.XConnectDataTool.Core</AssemblyName>
+    <Name>Sitecore.XConnectDataTool.Core</Name>
+    <RootNamespace>Sitecore.XConnectDataTool.Core</RootNamespace>
+    <ManageRoles>False</ManageRoles>
+    <AssemblyStatus>Exclude</AssemblyStatus>
+    <EnableCodeGeneration>True</EnableCodeGeneration>
+    <FieldsForCodeGen>Title,Blob,Shared,Unversioned,Default value,Validation,ValidationText,__Long description,__Short description,__Display name,__Hidden,__Read Only,__Sortorder</FieldsForCodeGen>
+    <CodeGenTargetProject>Sitecore.XConnectDataTool</CodeGenTargetProject>
+    <CodeGenFile>Models\TDSClasses.cs</CodeGenFile>
+    <BaseTransformFile>glassv3item.tt</BaseTransformFile>
+    <HeaderTransformFile>glassv3header.tt</HeaderTransformFile>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+    <SitecoreDeployFolder>C:\inetpub\wwwroot\sitecorehelix822\Website</SitecoreDeployFolder>
+    <SitecoreWebUrl>http://sitecorehelix822.verndale-local.com/</SitecoreWebUrl>
+    <SitecoreAccessGuid>4f69e0ea-4b94-4276-9414-7c5bed25bc9d</SitecoreAccessGuid>
+    <InstallSitecoreConnector>True</InstallSitecoreConnector>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <RecursiveDeployAction>Ignore</RecursiveDeployAction>
+  </PropertyGroup>
+  <ItemGroup>
+    <AssemblyAttributes Include="AssemblyFileVersion">
+      <Value>$(AssemblyFileVersion)</Value>
+    </AssemblyAttributes>
+    <AssemblyAttributes Include="AssemblyVersion">
+      <Value>$(AssemblyVersion)</Value>
+    </AssemblyAttributes>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeGenTemplate Include="Code Generation Templates\generalextensions.tt" />
+    <CodeGenTemplate Include="Code Generation Templates\glassv3header.tt" />
+    <CodeGenTemplate Include="Code Generation Templates\glassv3item.tt" />
+    <CodeGenTemplate Include="Code Generation Templates\helpers.tt" />
+    <CodeGenTemplate Include="Code Generation Templates\inflector.tt" />
+    <CodeGenTemplate Include="Code Generation Templates\itempaths.tt" />
+    <CodeGenTemplate Include="Code Generation Templates\stringextensions.tt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <SourceWebProjects Include="{BE11D0DD-DF0F-4ABD-918A-E9C9BD2A8AAB}|src\Foundation\XConnectDataTool\code\Sitecore.XConnectDataTool\Sitecore.XConnectDataTool.csproj">
+      <SourceWebPhysicalPath>..\..\code\Sitecore.XConnectDataTool</SourceWebPhysicalPath>
+      <SourceWebVirtualPath>/Sitecore.XConnectDataTool.csproj</SourceWebVirtualPath>
+      <SourceWebProjectId>be11d0dd-df0f-4abd-918a-e9c9bd2a8aab</SourceWebProjectId>
+    </SourceWebProjects>
+    <SourceWebProjects Include="{be11d0dd-df0f-4abd-918a-e9c9bd2a8aab}|src\Foundation\XConnectDataTool\code\Sitecore.XConnectDataTool\Sitecore.XConnectDataTool.csproj">
+      <SourceWebPhysicalPath>..\..\code\Sitecore.XConnectDataTool</SourceWebPhysicalPath>
+      <SourceWebVirtualPath>/Sitecore.XConnectDataTool.csproj</SourceWebVirtualPath>
+      <SourceWebProjectId>be11d0dd-df0f-4abd-918a-e9c9bd2a8aab</SourceWebProjectId>
+    </SourceWebProjects>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\code\Sitecore.XConnectDataTool\Sitecore.XConnectDataTool.csproj">
+      <Project>{be11d0dd-df0f-4abd-918a-e9c9bd2a8aab}</Project>
+      <Name>Sitecore.XConnectDataTool</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets" Condition="Exists('$(MSBuildExtensionsPath)\HedgehogDevelopment\SitecoreProject\v9.0\HedgehogDevelopment.SitecoreProject.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\..\..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\..\..\packages\Microsoft.Net.Compilers.2.2.0\build\Microsoft.Net.Compilers.props'))" />
+  </Target>
+</Project>
