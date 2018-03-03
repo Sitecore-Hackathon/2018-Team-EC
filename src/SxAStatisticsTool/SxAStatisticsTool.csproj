@@ -418,9 +418,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\SxAStatisticsTool.Constants.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\XConnectDataTool\RecommendedRenderings.cs" />
     <Compile Include="Repositories\Helpers\Util.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
@@ -441,7 +445,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
     <Folder Include="Repositories\Factories\" />
     <Folder Include="Views\" />
   </ItemGroup>

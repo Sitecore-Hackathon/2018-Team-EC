@@ -9,50 +9,8 @@ using System.Linq;
 
 namespace SxAStatisticsTool.Repositories.Helpers
 {
-    public static class Util
+    internal class DatabaseReader : IDatabaseReader
     {
-        const string sitesPath = "/sitecore/content"; //Make configurable
-
-        /// <summary>
-        /// Runs sitecore query against an item / database
-        /// </summary>
-        /// <typeparam name="T">Type</typeparam>
-        /// <param name="query"></param>
-        /// <param name="item">(Optional) Run query relative to this item</param>
-        /// <param name="database">(Optional) Sitecore database where to run the query</param>
-        /// <returns>IEnumerable of input type T</returns>
-        public static IEnumerable<T> RunQuery<T>(string query, Item item = null, Database database = null) where T : class
-        {
-
-            //Run query relative to item if available. If not, against db.
-            var currentItem = item ?? Sitecore.Context.Item;
-
-            var db = database ?? (item != null ? item.Database : Sitecore.Context.Database);
-            IEnumerable<Item> results = currentItem != null
-                ? currentItem.Axes.SelectItems(query)
-                : db.SelectItems(query);
-
-            return results == null ? null : results.Select(result => result as T).ToList();
-        }
-
-
-        /// <summary>
-        /// Retrieves all item guids that are instanced from a template id
-        /// </summary>
-        /// <param name="templateId">Template id to filter items</param>
-        /// <param name="path">(Optional) Path to limit the query to</param>
-        /// <returns>List of Guid</returns>
-        public static List<Guid> GetAllGuidsByTemplateId(ID templateId, string path)
-        {
-            if (string.IsNullOrEmpty(path)) path = sitesPath;
-            var query = string.Format(@"{0}//*[@@templateid='{1}']", path, templateId);
-
-            if (string.IsNullOrEmpty(query)) return null;
-            var results = RunQuery<Item>(query);
-            return results.Select(x => x.ID.Guid).Distinct().ToList();
-        }
-
-
         /// <summary>
         /// Retrieves a list of the most visited items by recency.
         /// </summary>
@@ -61,7 +19,7 @@ namespace SxAStatisticsTool.Repositories.Helpers
         /// <param name="path">When using a template id: search for withing an specific path.</param>
         /// <param name="templateId">Limit results to a subset of items based on the template id.</param>
         /// <returns></returns>
-        public static Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid())
+        public Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid())
         {
             var query = string.Empty;
 
@@ -107,6 +65,48 @@ namespace SxAStatisticsTool.Repositories.Helpers
             }
             return null;
         }
+
+        /// <summary>
+        /// Runs sitecore query against an item / database
+        /// </summary>
+        /// <typeparam name="T">Type</typeparam>
+        /// <param name="query"></param>
+        /// <param name="item">(Optional) Run query relative to this item</param>
+        /// <param name="database">(Optional) Sitecore database where to run the query</param>
+        /// <returns>IEnumerable of input type T</returns>
+        private static IEnumerable<T> RunQuery<T>(string query, Item item = null, Database database = null) where T : class
+        {
+
+            //Run query relative to item if available. If not, against db.
+            var currentItem = item ?? Sitecore.Context.Item;
+
+            var db = database ?? (item != null ? item.Database : Sitecore.Context.Database);
+            IEnumerable<Item> results = currentItem != null
+                ? currentItem.Axes.SelectItems(query)
+                : db.SelectItems(query);
+
+            return results == null ? null : results.Select(result => result as T).ToList();
+        }
+
+
+        /// <summary>
+        /// Retrieves all item guids that are instanced from a template id
+        /// </summary>
+        /// <param name="templateId">Template id to filter items</param>
+        /// <param name="path">(Optional) Path to limit the query to</param>
+        /// <returns>List of Guid</returns>
+        private static List<Guid> GetAllGuidsByTemplateId(ID templateId, string path)
+        {
+            if (string.IsNullOrEmpty(path)) path = Constants.Paths.DefaultPath;
+            var query = string.Format(@"{0}//*[@@templateid='{1}']", path, templateId);
+
+            if (string.IsNullOrEmpty(query)) return null;
+            var results = RunQuery<Item>(query);
+            return results.Select(x => x.ID.Guid).Distinct().ToList();
+        }
+
+
+        
 
 
     }

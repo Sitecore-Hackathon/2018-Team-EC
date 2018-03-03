@@ -6,9 +6,13 @@ namespace SxAStatisticsTool
 {
     public class Constants
     {
-        public static class TemplateGuids
+        public static class Paths
         {
-            //public static readonly string RecommendedRenderings = Sitecore.Configuration.Settings.GetSetting("SxAStatisticsTool.Guids.RecommendedRenderingsItem");
+            public static readonly string DefaultPath = Sitecore.Configuration.Settings.GetSetting("SxAStatisticsTool.Paths.DefaultPath");
+        }
+        public static class Values
+        {
+            public static readonly string RecommendedRenderingsItemName = Sitecore.Configuration.Settings.GetSetting("SxAStatisticsTool.Values.RecommendedRenderingsItemName");
         }
     }
 }

@@ -6,13 +6,13 @@ using Sitecore.Data;
 
 public struct Templates
 {
-    public struct RecommendedRenderings
+    public struct AvailableRenderings
     {
-        public static ID Id = new ID("{44DF22F0-8703-4380-9F37-42FA12116346}");
+        public static ID Id = new ID("{76DA0A8D-FC7E-42B2-AF1E-205B49E43F98}");
 
         public struct Fields
         {
-            public static readonly ID Renderings = new ID("{818B2889-C207-44B7-9AEF-300DBB4FB6AE}");
+            public static readonly ID Renderings = new ID("{455A3E98-A627-4B40-8035-E683A0331AC7}");
         }
     }
 }
