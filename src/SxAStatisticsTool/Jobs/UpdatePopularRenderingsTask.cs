@@ -6,8 +6,8 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Layouts;
 using Sitecore.SecurityModel;
-using SxAStatisticsTool.Repositories.Factories;
 using SxAStatisticsTool.Repositories.Helpers;
+using SxAStatisticsTool.Repositories.Factories;
 
 namespace SxAStatisticsTool.Jobs
 {

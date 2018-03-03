@@ -424,28 +424,19 @@
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="Models\XConnectDataTool\RecommendedRenderings.cs" />
-    <Compile Include="Repositories\Helpers\Util.cs" />
-    <Compile Include="Test.aspx.cs">
-      <DependentUpon>Test.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Test.aspx.designer.cs">
-      <DependentUpon>Test.aspx</DependentUpon>
-    </Compile>
-    <Content Include="app_code\Services\DataImporter\Services\IDataImporterService.cs" />
-    <Content Include="app_code\Services\DataImporter\Services\DataImporterService.cs" />
-    <Content Include="app_code\Services\DataImporter\Factories\DataImporterFactory.cs" />
+    <Compile Include="Repositories\Factories\DatabaseReaderFactory.cs" />
+    <Compile Include="Repositories\Helpers\DatabaseReader.cs" />
+    <Compile Include="Repositories\Helpers\IDatabaseReader.cs" />
     <Compile Include="Jobs\UpdatePopularRenderingsTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="Test.aspx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Repositories\Factories\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <PropertyGroup>
