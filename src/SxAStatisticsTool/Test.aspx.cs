@@ -16,6 +16,7 @@ namespace SxAStatisticsTool
         protected void Page_Load(object sender, EventArgs e)
         {
             var t = Util.GetMostVisitedItems();
+            var t2 = Util.GetMostVisitedItems(templateId: new Guid("{76036F5E-CBCE-46D1-AF0A-4143F9B557AA}"));
         }
 
 
