@@ -19,13 +19,13 @@ namespace SxAStatisticsTool.Repositories.Helpers
         /// <param name="path">When using a template id: search for withing an specific path.</param>
         /// <param name="templateId">Limit results to a subset of items based on the template id.</param>
         /// <returns></returns>
-        public Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid())
+        public Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid(), Database database = null)
         {
             var query = string.Empty;
 
             if (templateId != Guid.Empty)
             {
-                var itemIds = GetAllGuidsByTemplateId(new ID(templateId), path);
+                var itemIds = GetAllGuidsByTemplateId(new ID(templateId), path, database: database);
 
                 if (itemIds != null && itemIds.Any())
                 {
@@ -95,13 +95,13 @@ namespace SxAStatisticsTool.Repositories.Helpers
         /// <param name="templateId">Template id to filter items</param>
         /// <param name="path">(Optional) Path to limit the query to</param>
         /// <returns>List of Guid</returns>
-        private static List<Guid> GetAllGuidsByTemplateId(ID templateId, string path)
+        private static List<Guid> GetAllGuidsByTemplateId(ID templateId, string path, Database database)
         {
             if (string.IsNullOrEmpty(path)) path = Constants.Paths.DefaultPath;
             var query = string.Format(@"{0}//*[@@templateid='{1}']", path, templateId);
 
             if (string.IsNullOrEmpty(query)) return null;
-            var results = RunQuery<Item>(query);
+            var results = RunQuery<Item>(query, database: database);
             return results.Select(x => x.ID.Guid).Distinct().ToList();
         }
 

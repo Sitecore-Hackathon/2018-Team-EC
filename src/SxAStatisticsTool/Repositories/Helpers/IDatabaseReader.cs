@@ -19,7 +19,7 @@ namespace SxAStatisticsTool.Repositories.Helpers
         /// <param name="path">When using a template id: search for within an specific path.</param>
         /// <param name="templateId">Limit results to a subset of items based on the template id.</param>
         /// <returns></returns>
-        Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid());
+        Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid(), Database database = null);
 
     }
 }

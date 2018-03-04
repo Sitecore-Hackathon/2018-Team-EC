@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.SearchTypes;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Layouts;
@@ -14,37 +17,48 @@ namespace SxAStatisticsTool.Jobs
     public class UpdatePopularRenderingsTask
     {
         private IDatabaseReader _databaseReader;
-        UpdatePopularRenderingsTask()
+
+        private Database database;
+
+        public UpdatePopularRenderingsTask()
         {
+            database = Database.GetDatabase("master");
             _databaseReader = DatabaseReaderFactory.Build();
         }
 
         public void Update(Item[] items, Sitecore.Tasks.CommandItem command, Sitecore.Tasks.ScheduleItem schedule)
         {
 
-            var recommendedRenderingsItem = GetRecommendedRenderingItem();
-            if (recommendedRenderingsItem == null)
+            var recommendedRenderingsItems = GetRecommendedRenderingItems();
+            if (recommendedRenderingsItems == null)
             {
                 Log.Debug("Recommended Rendering Item not found");
                 return;
             }
             using (new SecurityDisabler())
             {
-                recommendedRenderingsItem.Editing.BeginEdit();
-                recommendedRenderingsItem[Templates.AvailableRenderings.Fields.Renderings] = GetVisitedItemsRenderings();
-                recommendedRenderingsItem.Editing.EndEdit();
+                foreach (var rd in recommendedRenderingsItems)
+                {
+                    var item = database.GetItem(rd.ItemId);
+                    item.Editing.BeginEdit();
+                    item[Templates.AvailableRenderings.Fields.Renderings] = GetVisitedItemsRenderings();
+                    item.Editing.EndEdit();
+                }
             }
         }
+
         private string GetVisitedItemsRenderings()
         {
-            var visitedItems = _databaseReader.GetMostVisitedItems();
+            var visitedItems = _databaseReader.GetMostVisitedItems(database: database);
             List<string> renderingStringList = new List<string>();
             foreach (KeyValuePair<Guid, int> visitedItem in visitedItems)
             {
-                Item item = Sitecore.Context.Database.GetItem(Sitecore.Data.ID.Parse(visitedItem.Key));
+                Item item = database.GetItem(ID.Parse(visitedItem.Key));
                 if (item != null)
                 {
-                    RenderingReference[] renderings = item.Visualization.GetRenderings(Sitecore.Context.Device, true);
+                    DeviceRecords devices = database.Resources.Devices;
+                    DeviceItem defaultDevice = devices.GetAll().First(d => d.Name.ToLower() == "default");
+                    RenderingReference[] renderings = item.Visualization.GetRenderings(defaultDevice, true);
                     foreach (var rendering in renderings)
                     {
                         string renderingId = rendering.RenderingID.ToString();
@@ -52,16 +66,20 @@ namespace SxAStatisticsTool.Jobs
                     }
                 }
             }
-            return String.Join("|",renderingStringList.Distinct());
+            return String.Join("|", renderingStringList.Distinct());
         }
 
-        private Item GetRecommendedRenderingItem()
+        private List<SearchResultItem> GetRecommendedRenderingItems()
         {
-            var database = Sitecore.Data.Database.GetDatabase("master");
-            var query = $"{Constants.Paths.DefaultPath}//*[@@templateid='{Templates.AvailableRenderings.Id}' and @@name='{Constants.Values.RecommendedRenderingsItemName}']";
-            return database.GetItem(query);
+            ISearchIndex index = ContentSearchManager.GetIndex("sitecore_master_index");
+            using (IProviderSearchContext context = index.CreateSearchContext())
+            {
+                var results = context.GetQueryable<SearchResultItem>()
+                    .Where(x => x.TemplateId.Guid == Templates.AvailableRenderings.Id.Guid &&
+                                x.Name == Constants.Values.RecommendedRenderingsItemName);
+
+                return results.ToList();
+            }
         }
     }
-
-
 }
