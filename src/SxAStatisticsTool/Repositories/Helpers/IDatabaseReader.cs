@@ -21,8 +21,5 @@ namespace SxAStatisticsTool.Repositories.Helpers
         /// <returns></returns>
         Dictionary<Guid, int> GetMostVisitedItems(int maxItems = 100, int days = 60, string path = null, Guid templateId = new Guid(), Database database = null);
 
-
-
-        IEnumerable<T> RunQuery<T>(string query, Item item = null, Database database = null) where T : class;
     }
 }
