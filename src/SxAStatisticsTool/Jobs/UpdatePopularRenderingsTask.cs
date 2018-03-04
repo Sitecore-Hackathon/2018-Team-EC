@@ -14,7 +14,7 @@ namespace SxAStatisticsTool.Jobs
     public class UpdatePopularRenderingsTask
     {
         private IDatabaseReader _databaseReader;
-        UpdatePopularRenderingsTask()
+        public UpdatePopularRenderingsTask()
         {
             _databaseReader = DatabaseReaderFactory.Build();
         }
@@ -37,14 +37,17 @@ namespace SxAStatisticsTool.Jobs
         }
         private string GetVisitedItemsRenderings()
         {
-            var visitedItems = _databaseReader.GetMostVisitedItems();
+            var visitedItems = _databaseReader.GetMostVisitedItems(templateId: Constants.Templates.Page);
             List<string> renderingStringList = new List<string>();
             foreach (KeyValuePair<Guid, int> visitedItem in visitedItems)
             {
-                Item item = Sitecore.Context.Database.GetItem(Sitecore.Data.ID.Parse(visitedItem.Key));
+                var database = Sitecore.Data.Database.GetDatabase("master");
+                Item item = database.GetItem(Sitecore.Data.ID.Parse(visitedItem.Key));
                 if (item != null)
                 {
-                    RenderingReference[] renderings = item.Visualization.GetRenderings(Sitecore.Context.Device, true);
+                    var devices = item.Database.Resources.Devices;
+                    var defaultDevice = devices.GetAll().Where(d => d.Name.ToLower() == "default").First();
+                    RenderingReference[] renderings = item.Visualization.GetRenderings(defaultDevice, true);
                     foreach (var rendering in renderings)
                     {
                         string renderingId = rendering.RenderingID.ToString();
@@ -59,7 +62,8 @@ namespace SxAStatisticsTool.Jobs
         {
             var database = Sitecore.Data.Database.GetDatabase("master");
             var query = $"{Constants.Paths.DefaultPath}//*[@@templateid='{Templates.AvailableRenderings.Id}' and @@name='{Constants.Values.RecommendedRenderingsItemName}']";
-            return database.GetItem(query);
+            var result = _databaseReader.RunQuery<Item>(query, database: database).FirstOrDefault();
+            return result;
         }
     }
 

@@ -74,7 +74,7 @@ namespace SxAStatisticsTool.Repositories.Helpers
         /// <param name="item">(Optional) Run query relative to this item</param>
         /// <param name="database">(Optional) Sitecore database where to run the query</param>
         /// <returns>IEnumerable of input type T</returns>
-        private static IEnumerable<T> RunQuery<T>(string query, Item item = null, Database database = null) where T : class
+        public IEnumerable<T> RunQuery<T>(string query, Item item = null, Database database = null) where T : class
         {
 
             //Run query relative to item if available. If not, against db.
@@ -95,19 +95,15 @@ namespace SxAStatisticsTool.Repositories.Helpers
         /// <param name="templateId">Template id to filter items</param>
         /// <param name="path">(Optional) Path to limit the query to</param>
         /// <returns>List of Guid</returns>
-        private static List<Guid> GetAllGuidsByTemplateId(ID templateId, string path)
+        public List<Guid> GetAllGuidsByTemplateId(ID templateId, string path)
         {
+            var database = Sitecore.Data.Database.GetDatabase("master");
             if (string.IsNullOrEmpty(path)) path = Constants.Paths.DefaultPath;
             var query = string.Format(@"{0}//*[@@templateid='{1}']", path, templateId);
 
             if (string.IsNullOrEmpty(query)) return null;
-            var results = RunQuery<Item>(query);
+            var results = RunQuery<Item>(query, database: database);
             return results.Select(x => x.ID.Guid).Distinct().ToList();
         }
-
-
-        
-
-
     }
 }

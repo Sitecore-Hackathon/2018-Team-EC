@@ -1,3 +1,34 @@
+
+![Hackathon Logo](documentation/images/hackathon.png?raw=true "Hackathon Logo")
+
+## Sitecore Experience Accelerator Statistics Tool | Team EC
+
+* **Module Purpose:** Utilize analytics data in a new SxA category where the user can pick the modules from the most popular pages.
+* **Module Sitecore Hackathon Category:** Sitecore Experience Accelerator
+
+## Installation
+### Prerequesites
+* Sitecore.NET 9.0.1 (rev. 171219)
+* Sitecore Experience Accelerator for 9.1
+
+### Step 1: Install the Sitecore package.
+* The package can be found [here](https://github.com/Sitecore-Hackathon/2018-Team-EC/tree/master/sc.package/package.zip)
+* Upload the package using the wizard.
+* Replace existing items
+* Wait for it to complete
+### Step 2: Create a tenant
+* Create a tenant in sitecore
+* Create a site in the tenant
+
+
+
+
+
+
+
+
+
+
 # Documentation
 
 The documentation for this years Hackathon must be provided as a readme in Markdown format as part of your submission. 
